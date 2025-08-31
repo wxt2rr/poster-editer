@@ -1,0 +1,73 @@
+#!/bin/bash
+
+# 海报编辑器开发模式快捷脚本
+# 简化常用操作的快捷方式
+
+case "$1" in
+    "start"|"s")
+        echo "🚀 启动海报编辑器..."
+        node service.js start
+        ;;
+    "stop"|"x")
+        echo "🛑 停止海报编辑器..."
+        node service.js stop
+        ;;
+    "restart"|"r")
+        echo "🔄 重启海报编辑器..."
+        node service.js restart
+        ;;
+    "status"|"st")
+        node service.js status
+        ;;
+    "logs"|"l")
+        node service.js logs
+        ;;
+    "clean"|"c")
+        node service.js clean
+        ;;
+    "install"|"i")
+        echo "📦 安装依赖..."
+        cd client && npm install && cd ..
+        ;;
+    "build"|"b")
+        echo "🏗️ 构建项目..."
+        cd client && npm run build && cd ..
+        ;;
+    "open"|"o")
+        echo "🌐 打开浏览器..."
+        if command -v open >/dev/null 2>&1; then
+            open http://localhost:3000
+        elif command -v xdg-open >/dev/null 2>&1; then
+            xdg-open http://localhost:3000
+        elif command -v start >/dev/null 2>&1; then
+            start http://localhost:3000
+        else
+            echo "请手动打开: http://localhost:3000"
+        fi
+        ;;
+    "")
+        echo ""
+        echo "🎨 海报编辑器开发工具"
+        echo ""
+        echo "快捷命令:"
+        echo "  start, s     启动服务"
+        echo "  stop, x      停止服务"
+        echo "  restart, r   重启服务"
+        echo "  status, st   查看状态"
+        echo "  logs, l      查看日志"
+        echo "  clean, c     清理日志"
+        echo "  install, i   安装依赖"
+        echo "  build, b     构建项目"
+        echo "  open, o      打开浏览器"
+        echo ""
+        echo "示例:"
+        echo "  ./dev start    # 启动服务"
+        echo "  ./dev st       # 查看状态"
+        echo "  ./dev r        # 重启服务"
+        echo ""
+        ;;
+    *)
+        echo "❌ 未知命令: $1"
+        echo "运行 './dev' 查看可用命令"
+        ;;
+esac 
